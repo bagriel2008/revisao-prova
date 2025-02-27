@@ -1,20 +1,18 @@
-async function loadProducts() {
-    const response = await fetch('http://localhost:3030/products')
+async function loadCars() {
+    const response = await fetch('http://localhost:3030/Cars')
     const data = await response.json()
     const tbody = document.querySelector('tbody')
     tbody.innerHTML = ''
 
-    data.products.forEach(product => {
+    data.cars.forEach(car => {
 
         const row = document.createElement('tr')
         row.innerHTML = `
-                <td>${product.id}</td>
-                <td>${product.name}</td>
-                <td>${product.quantity}</td>
-                <td>${product.price}</td>
+                <td>${car.id}</td>
+                <td>${car.name}</td>
                 <td>
-                    <button onclick="editProducts(${product.id})">Editar </button>
-                    <button onclick="deleteProducts(${product.id})">Deletar </button>
+                    <button  class = "edit-btn" onclick="editCars(${car.id})">Editar </button>
+                    <button class = "delete-btn" onclick="deleteCars(${car.id})">Deletar </button>
 
                 </td>
 
@@ -26,49 +24,42 @@ async function loadProducts() {
     );
 }
 
-document.querySelector('.product-form form').addEventListener('submit', async (e) => {
+document.querySelector('.car-form form').addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    const name = document.getElementById('product-name').value
-    const price = document.getElementById('product-price').value
-    const quantity = document.getElementById('product-quantity').value
+    const name = document.getElementById('car-name').value
 
 
-    await fetch('http://localhost:3030/products', {
+
+    await fetch('http://localhost:3030/cars', {
 
         method: 'post',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, price, quantity })
+        body: JSON.stringify({ name})
     })
 
-    document.querySelector('.product-form form').reset()
-    loadProducts()
+    document.querySelector('.car-form form').reset()
+    loadCars()
 })
 
-async function editProducts(id) {
+async function editCars(id) {
     const name = prompt('novo nome')
-    const price = prompt('novo preço')
-    const quantity = prompt('nova quantidade')
 
-    await fetch(`http://localhost:3030/products/${id}`, {
+    await fetch(`http://localhost:3030/cars/${id}`, {
         method: 'put',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name, price, quantity })
+        body: JSON.stringify({ name })
     })
 
-    loadProducts()
+    loadCars()
 
 }
 
-async function deleteProducts(id) {
-    await fetch(`http://localhost:3030/products/${id}`,{
-        method: ' DELETE'
+async function deleteCars(id) {
+    await fetch(`http://localhost:3030/cars/${id}`,{
+        method: 'DELETE'
     })
-    loadProducts
+    loadCars()
 }
 
-
-
-
-
-loadProducts()
+loadCars()

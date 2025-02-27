@@ -83,22 +83,22 @@
     gap: 2rem;
   }
   
-  .product-form, .product-list {
+  .car-form, .car-list {
     flex: 1;
   }
   
-  .product-form h2, .product-list h2 {
+  .car-form h2, .car-list h2 {
     margin-bottom: 1rem;
     font-size: 1.2rem;
   }
   
-  .product-form input, .product-form button {
+  .car-form input, .car-form button {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
   }
   
-  .product-form button {
+  .car-form button {
     background-color: #28a745;
     color: white;
     border: none;
@@ -106,16 +106,16 @@
     cursor: pointer;
   }
   
-  .product-form button:hover {
+  .car-form button:hover {
     background-color: #218838;
   }
   
-  .product-list table {
+  .car-list table {
     width: 100%;
     border-collapse: collapse;
   }
   
-  .product-list th, .product-list td {
+  .car-list th, .car-list td {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: center;

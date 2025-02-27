@@ -9,25 +9,25 @@ app.use(express.json());
 const port = 3030;
 
 app.post('/cadastro', (req, res) =>{
-    const {username, phone, address} = req.body
-    const query = "INSERT INTO users (username, phone, address) VALUES (?,?,?)"
+    const {username, password, address} = req.body
+    const query = "INSERT INTO users (username, password, address) VALUES (?,?,?)"
     
-    connection.query(query, [username, phone, address], (err, results) =>{
+    connection.query(query, [username, password, address], (err, results) =>{
         if (err) {
             return res.status(500).json({success:false, message:'Erro no servidor'})
         }
         else {
             res.json({success:true, message:'Cadastro bem sucedido', 
-            data:{ id: results.insertId, username, phone, address }})
+            data:{ id: results.insertId, username, password, address }})
         }
     })
 })
 
 //criar um produto
-app.post('/products', (req, res) => {
-    const {name, quantity, price} = req.body
-    const query = 'INSERT INTO products(name, price, quantity) VALUES(?,?,?)'
-    connection.query(query,[name, quantity, price], (err, result) =>{
+app.post('/cars', (req, res) => {
+    const {name} = req.body
+    const query = 'INSERT INTO cars(name) VALUES(?)'
+    connection.query(query,[name], (err, result) =>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao inserir produto'})
         }
@@ -37,21 +37,21 @@ app.post('/products', (req, res) => {
 })
 
 //buscar os brodutos
-app.get('/products', (req, res) =>{
-    const query = 'SELECT * FROM products'
+app.get('/cars', (req, res) =>{
+    const query = 'SELECT * FROM cars'
     connection.query(query, (err, results) =>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao buscar produto'})
         }
-        res.json({success:true, products:results})
+        res.json({success:true, cars:results})
     })
 })
 
-app.put('/products/:id', (req, res) => {
+app.put('/cars/:id', (req, res) => {
     const {id} = req.params
-    const {name, quantity, price} = req.body
-    const query = 'UPDATE products SET name = ?, quantity = ?, price = ? WHERE id = ?'
-    connection.query(query,[name, quantity, price, id], (err) =>{
+    const {name} = req.body
+    const query = 'UPDATE cars SET name = ? WHERE id = ?'
+    connection.query(query,[name, id], (err) =>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao atualizar produto'})
         }
@@ -60,9 +60,9 @@ app.put('/products/:id', (req, res) => {
     })
 })
 
-app.delete('/products/:id', (req, res) =>{
+app.delete('/cars/:id', (req, res) =>{
     const {id} = req.params
-    const query = 'DELETE FROM products WHERE id = ?'
+    const query = 'DELETE FROM cars WHERE id = ?'
     connection.query(query, [id], (err)=>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao deletar produto'})
