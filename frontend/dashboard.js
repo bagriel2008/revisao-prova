@@ -10,6 +10,8 @@ async function loadCars() {
         row.innerHTML = `
                 <td>${car.id}</td>
                 <td>${car.name}</td>
+                <td>${car.placa}</td>
+
                 <td>
                     <button  class = "edit-btn" onclick="editCars(${car.id})">Editar </button>
                     <button class = "delete-btn" onclick="deleteCars(${car.id})">Deletar </button>
@@ -28,6 +30,7 @@ document.querySelector('.car-form form').addEventListener('submit', async (e) =>
     e.preventDefault()
 
     const name = document.getElementById('car-name').value
+    const placa = document.getElementById('car-placa').value
 
 
 
@@ -35,7 +38,7 @@ document.querySelector('.car-form form').addEventListener('submit', async (e) =>
 
         method: 'post',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name})
+        body: JSON.stringify({name, placa})
     })
 
     document.querySelector('.car-form form').reset()
@@ -48,7 +51,9 @@ async function editCars(id) {
     await fetch(`http://localhost:3030/cars/${id}`, {
         method: 'put',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name })
+        body: JSON.stringify({ name }),
+        body: JSON.stringify({ placa })
+
     })
 
     loadCars()

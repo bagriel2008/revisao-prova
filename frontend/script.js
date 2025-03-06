@@ -1,4 +1,4 @@
-const form = document.getElementById('loginForm')
+const form = document.getElementById('CadastrarForm')
 
 form.addEventListener('submit', async(e)=> {
     e.preventDefault()
@@ -17,7 +17,7 @@ form.addEventListener('submit', async(e)=> {
 
     if (results.success) {
         alert('cadastro bem sucedido')
-        window.location.href='dashboard.html'
+        window.location.href='login.html'
     } else {
         alert('Falta alguma informação')
     }

@@ -23,11 +23,28 @@ app.post('/cadastro', (req, res) =>{
     })
 })
 
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+  
+    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
+    connection.query(query, [username, password], (err, results) => {
+      if (err) {
+        return res.status(500).json({ success: false, message: 'Erro no servidor.' });
+      }
+  
+      if (results.length > 0) {
+        res.json({ success: true, message: 'Login bem-sucedido!' });
+      } else {
+        res.json({ success: false, message: 'Usuário ou senha incorretos!' });
+      }
+    });
+});
+
 //criar um produto
 app.post('/cars', (req, res) => {
-    const {name} = req.body
-    const query = 'INSERT INTO cars(name) VALUES(?)'
-    connection.query(query,[name], (err, result) =>{
+    const {name, placa} = req.body
+    const query = 'INSERT INTO cars(name, placa) VALUES(?, ?)'
+    connection.query(query,[name, placa], (err, result) =>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao inserir produto'})
         }
@@ -49,9 +66,9 @@ app.get('/cars', (req, res) =>{
 
 app.put('/cars/:id', (req, res) => {
     const {id} = req.params
-    const {name} = req.body
-    const query = 'UPDATE cars SET name = ? WHERE id = ?'
-    connection.query(query,[name, id], (err) =>{
+    const {name, placa} = req.body
+    const query = 'UPDATE cars SET name = ? placa = ? WHERE id = ?'
+    connection.query(query,[name, placa, id], (err) =>{
         if (err) {
             return res.status(500).json({success:false, massage:'Erro ao atualizar produto'})
         }
